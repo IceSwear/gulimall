@@ -1,0 +1,32 @@
+spring:
+  # 当前服务名称
+  application:
+    name: gulimall-coupon
+  # nacos
+  cloud:
+    nacos:
+      config:
+        # 配置中心服务地址
+        server-addr: 127.0.0.1:8848
+        # 指定后缀名
+        file-extension: yml
+        # 指定命名空间
+        namespace: 17ab2726-258e-4aab-a6c8-ea1a0728714d
+        # 指定所属分组
+        group: dev
+        # 拓展分组
+        extension-configs:
+          # 拓展数据源相关配置，其中data-id为nacos中配置的Data ID，为dev分组，开启热更新
+          - dataId: datasource.yml
+            group: dev
+            refresh: true
+          # 拓展nacos相关配置，其中data-id为nacos中配置的Data ID，为dev分组，开启热更新
+          - dataId: mybatis.yml
+            group: dev
+            refresh: true
+          # 拓展其他相关配置，其中data-id为nacos中配置的Data ID，为dev分组，开启热更新
+          - dataId: other.yml
+            group: dev
+            refresh: true
+      discovery:
+        server-addr: 127.0.0.1:8848
