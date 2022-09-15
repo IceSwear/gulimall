@@ -2,11 +2,12 @@ package com.kk.gulimall.order.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
+
 
 /**
  * Ö§¸¶ÐÅÏ¢±í
