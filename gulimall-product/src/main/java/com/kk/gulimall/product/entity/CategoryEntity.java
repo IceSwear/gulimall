@@ -2,6 +2,7 @@ package com.kk.gulimall.product.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
@@ -42,6 +43,7 @@ public class CategoryEntity implements Serializable {
 	/**
 	 * ÊÇ·ñÏÔÊ¾[0-²»ÏÔÊ¾£¬1ÏÔÊ¾]
 	 */
+//	@TableLogic (value = "1",delval = "0")
 	private Integer showStatus;
 	/**
 	 * ÅÅÐò

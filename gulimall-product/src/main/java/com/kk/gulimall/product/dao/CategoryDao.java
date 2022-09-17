@@ -3,6 +3,7 @@ package com.kk.gulimall.product.dao;
 import com.kk.gulimall.product.entity.CategoryEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ import java.util.List;
 public interface CategoryDao extends BaseMapper<CategoryEntity> {
 
     List<CategoryEntity> selectAll();
+
+    void logicallyDeletedByIds(@Param(value = "ids") List<Long> asList);
 }
