@@ -81,8 +81,8 @@ public class BrandController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@Validated(value = {UpdateGroup.class})@RequestBody BrandEntity brand) {
-        brandService.updateById(brand);
+    public R update(@Validated(value = {UpdateGroup.class}) @RequestBody BrandEntity brand) {
+        brandService.updateDetail(brand);
 
         return R.ok();
     }
@@ -92,11 +92,11 @@ public class BrandController {
      * 修改状态
      */
     @RequestMapping("/update/status")
-    public R updateStatus(@Validated(value = {UpdateStatusGroup.class})@RequestBody BrandEntity brand) {
+    public R updateStatus(@Validated(value = {UpdateStatusGroup.class}) @RequestBody BrandEntity brand) {
         brandService.updateById(brand);
-
         return R.ok();
     }
+
     /**
      * 删除
      */

@@ -3,6 +3,7 @@ package com.kk.gulimall.product.dao;
 import com.kk.gulimall.product.entity.CategoryBrandRelationEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * Æ·ÅÆ·ÖÀà¹ØÁª
@@ -13,5 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface CategoryBrandRelationDao extends BaseMapper<CategoryBrandRelationEntity> {
-	
+
+    void updateCategory(@Param(value = "catId") Long catId,@Param(value = "name") String name);
 }

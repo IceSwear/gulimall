@@ -25,6 +25,7 @@ public class ListValueConstraintValidator implements ConstraintValidator<ListVal
     @Override
     public void initialize(ListValue constraintAnnotation) {
 //        ConstraintValidator.super.initialize(constraintAnnotation);
+        //
         int[] values = constraintAnnotation.values();
         if (!Objects.isNull(values)){
             for (int value : values) {
@@ -41,7 +42,7 @@ public class ListValueConstraintValidator implements ConstraintValidator<ListVal
      */
     @Override
     public boolean isValid(Integer value, ConstraintValidatorContext constraintValidatorContext) {
-        //这里就是进行校验的
+        //这里就是进行校验的，返回校验的结果true or false
         return set.contains(value);
     }
 }

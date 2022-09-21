@@ -23,8 +23,9 @@ public class CorsConfig {
         config.addAllowedOrigin("*");
         //允许的请求头
         config.addAllowedHeader("*");
+        //是否允许cookie进行跨域
         config.setAllowCredentials(true);
-        //添加映射路径，我们拦截一切请求
+        //添加映射路径，我们拦截一切请求，任意位置都要跨域配置
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
         source.registerCorsConfiguration("/**", config);
         //返回新的CorsFilter
