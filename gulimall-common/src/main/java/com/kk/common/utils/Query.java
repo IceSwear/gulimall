@@ -32,14 +32,16 @@ public class Query<T> {
         long curPage = 1;
         long limit = 10;
 
+        //非空就赋值
         if(params.get(Constant.PAGE) != null){
             curPage = Long.parseLong((String)params.get(Constant.PAGE));
         }
+        //非空就赋值
         if(params.get(Constant.LIMIT) != null){
             limit = Long.parseLong((String)params.get(Constant.LIMIT));
         }
 
-        //分页对象
+        //mp分页对象
         Page<T> page = new Page<>(curPage, limit);
 
         //分页参数
@@ -47,6 +49,7 @@ public class Query<T> {
 
         //排序字段
         //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
+        //防sql注入
         String orderField = SQLFilter.sqlInject((String)params.get(Constant.ORDER_FIELD));
         String order = (String)params.get(Constant.ORDER);
 

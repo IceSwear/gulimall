@@ -62,7 +62,9 @@ public class CategoryBrandRelationController {
     }
 
     /**
-     * 保存
+     * 新增品牌与分类关联关系
+     * @param categoryBrandRelation
+     * @return
      */
     @RequestMapping("/save")
     public R save(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
@@ -73,7 +75,7 @@ public class CategoryBrandRelationController {
     }
 
     /**
-     * 修改
+     * 更新
      */
     @RequestMapping("/update")
     public R update(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){

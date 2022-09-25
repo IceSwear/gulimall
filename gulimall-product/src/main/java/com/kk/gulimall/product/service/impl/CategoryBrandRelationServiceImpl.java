@@ -43,6 +43,11 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         return new PageUtils(page);
     }
 
+
+    /**
+     * 新增品牌与分类关联关系
+     * @param categoryBrandRelation
+     */
     @Override
     public void saveDetail(CategoryBrandRelationEntity categoryBrandRelation) {
         Long brandId = categoryBrandRelation.getBrandId();
@@ -50,10 +55,12 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         //查询详细名字
         BrandEntity brandEntity = brandDao.selectById(brandId);
         CategoryEntity categoryEntity = categoryDao.selectById(catelogId);
+        //如果非空，就设置品牌名
         if (!Objects.isNull(brandEntity)) {
             categoryBrandRelation.setBrandName(brandEntity.getName());
 
         }
+        //如果非空，就设置目录名字
         if (!Objects.isNull(categoryEntity)) {
             categoryBrandRelation.setCatelogName(categoryEntity.getName());
         }
@@ -62,10 +69,11 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
 
     @Override
     public void updateBrand(Long brandId, String name) {
-        //
+        //new categoryBrandRelationEntity
         CategoryBrandRelationEntity categoryBrandRelationEntity = new CategoryBrandRelationEntity();
         categoryBrandRelationEntity.setBrandId(brandId);
         categoryBrandRelationEntity.setBrandName(name);
+        //更新条件 品牌所在的id
         this.update(categoryBrandRelationEntity,new UpdateWrapper<CategoryBrandRelationEntity>().eq("brand_id",brandId));
     }
 
