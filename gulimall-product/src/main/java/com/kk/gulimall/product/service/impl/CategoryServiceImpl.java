@@ -57,7 +57,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @Override
     public void removeMenusByIds(List<Long> asList) {
         //先检查 TODO 检查删除前是否被其他地方引用
-        log.info("删除ids:{}",asList);
+        log.info("删除ids:{}", asList);
         categoryDao.logicallyDeletedByIds(asList);
     }
 
@@ -65,50 +65,53 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     /**
      * 找到Catelogid完整路径
      * 父/子/孙
+     *
      * @param catelogId
      * @return
      */
     @Override
     public Long[] findCategoryPath(Long catelogId) {
         //new a  list
-        List<Long> paths =new ArrayList<>();
+        List<Long> paths = new ArrayList<>();
 
         List<Long> parentPath = findParentPath(catelogId, paths);
         //反转，将集合反转，因为add进去有顺序
         Collections.reverse(parentPath);
-        log.info("parentPath:{}",parentPath);
+        log.info("parentPath:{}", parentPath);
         //转成数组，且这个数组需要定义长度,要带入一个长度定义好的数组
         return parentPath.toArray(new Long[parentPath.size()]);
     }
 
     /**
      * 递归方法
+     *
      * @param catelogId
      * @param paths
      * @return
      */
-    private  List<Long> findParentPath(Long catelogId,List<Long> paths){
+    private List<Long> findParentPath(Long catelogId, List<Long> paths) {
         //收集当前节点id
         paths.add(catelogId);
         CategoryEntity byId = this.getById(catelogId);
         //条件，等于0就继续
-        if(byId.getParentCid()!=0){
+        if (byId.getParentCid() != 0) {
             //将查出的对象继续迭代,直到条件不满足
-            findParentPath(byId.getParentCid(),paths);
+            findParentPath(byId.getParentCid(), paths);
         }
         return paths;
     }
+
     /**
      * 级联更新所有关联的数据
+     *
      * @param category
      */
     @Override
     public void updateCascade(CategoryEntity category) {
         this.updateById(category);
-        categoryBrandRelationService.updateCategory(category.getCatId(),category.getName());
+        categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
 
     }
-
 
 
     private List<CategoryEntity> getChildrens(CategoryEntity root, List<CategoryEntity> all) {
@@ -118,7 +121,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             s.setChildren(getChildrens(s, all));
             return s;
         }).sorted((s1, s2) -> {
-            return (s1.getSort() == null ? 0 : s1.getSort()) - (s2.getSort() == null ? 0 : s2.getSort());
+            return (s1.getSort() == null ? 0 : s1.getSort()) - (s2  .getSort() == null ? 0 : s2.getSort());
         }).collect(Collectors.toList());
         return children;
     }

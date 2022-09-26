@@ -31,13 +31,14 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+
     /**
-     * 列表
+     * Query all levels of catelogs and show as tree style获取所有分类及子分类
+     * @return
      */
     @RequestMapping("/list/tree")
     public R list(){
        List<CategoryEntity> entities =categoryService.listWithTree();
-
         return R.ok().put("data", entities);
     }
 
@@ -85,7 +86,6 @@ public class CategoryController {
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] catIds){
         //检查当前的删除菜单是否被别的地方引用
-
         categoryService.removeMenusByIds(Arrays.asList(catIds));
         return R.ok();
     }

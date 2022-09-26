@@ -1,9 +1,16 @@
 package com.kk.gulimall.product.service.impl;
 
+import com.kk.gulimall.product.entity.AttrEntity;
+import com.kk.gulimall.product.service.AttrService;
+import com.kk.gulimall.product.vo.AttrGroupWithAttrsVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -21,6 +28,10 @@ import org.springframework.util.StringUtils;
 @Slf4j
 public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEntity> implements AttrGroupService {
 
+
+    @Autowired
+    private AttrService attrService;
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<AttrGroupEntity> page = this.page(new Query<AttrGroupEntity>().getPage(params), new QueryWrapper<AttrGroupEntity>());
@@ -31,6 +42,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
     /**
      * 获取分类属性接口 查询
+     *
      * @param params
      * @param catelogId
      * @return
@@ -58,5 +70,29 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         //这是封装好的信息，就是讲map里的分页信息直接封装
         page = this.page(new Query<AttrGroupEntity>().getPage(params), wrapper);
         return new PageUtils(page);
+    }
+
+
+    /**
+     * 根据分类id查出所有的分组以及这些组里面的属性
+     *
+     * @param catelogId
+     * @return
+     */
+    @Override
+    public List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId) {
+        // 查询分组信息
+        QueryWrapper<AttrGroupEntity> queryWrapper = new QueryWrapper<AttrGroupEntity>().eq("catelog_id", catelogId);
+        List<AttrGroupEntity> list = this.list(queryWrapper);
+        //查询书所有属性
+        List<AttrGroupWithAttrsVo> collect = list.stream().map(s -> {
+            AttrGroupWithAttrsVo vo = new AttrGroupWithAttrsVo();
+            BeanUtils.copyProperties(s, vo);
+            List<AttrEntity> relationAttr = attrService.getRelationAttr(vo.getAttrGroupId());
+            //将集合也放进去
+            vo.setAttrs(relationAttr);
+            return vo;
+        }).collect(Collectors.toList());
+        return collect;
     }
 }

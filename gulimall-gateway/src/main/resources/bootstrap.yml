@@ -14,6 +14,7 @@ spring:
         namespace: 68b3b285-4e25-4c0c-8fbf-6213a88a5634
         # 指定所属分组
         group: dev
+        refresh-enabled: true
       discovery:
         server-addr: 127.0.0.1:8848
         # 拓展分组

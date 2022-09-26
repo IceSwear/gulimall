@@ -6,11 +6,7 @@ import java.util.Map;
 import com.kk.common.utils.PageUtils;
 import com.kk.common.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.kk.gulimall.coupon.entity.SpuBoundsEntity;
 import com.kk.gulimall.coupon.service.SpuBoundsService;
@@ -55,9 +51,15 @@ public class SpuBoundsController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
+//    @RequestMapping("/save")
+//    public R save(@RequestBody SpuBoundsEntity spuBounds){
+//		spuBoundsService.save(spuBounds);
+//
+//        return R.ok();
+//    }
+    @PostMapping("/save")
     public R save(@RequestBody SpuBoundsEntity spuBounds){
-		spuBoundsService.save(spuBounds);
+        spuBoundsService.save(spuBounds);
 
         return R.ok();
     }

@@ -3,6 +3,7 @@ package com.kk.gulimall.member.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ import com.kk.common.utils.R;
  * @date 2022-09-15 14:58:42
  */
 @RestController
+@Slf4j
 @RequestMapping("member/memberlevel")
 public class MemberLevelController {
     @Autowired
@@ -56,6 +58,7 @@ public class MemberLevelController {
      */
     @RequestMapping("/save")
     public R save(@RequestBody MemberLevelEntity memberLevel){
+        log.info("/save{}",memberLevel);
 		memberLevelService.save(memberLevel);
 
         return R.ok();

@@ -6,11 +6,14 @@ import com.kk.gulimall.product.dao.BrandDao;
 import com.kk.gulimall.product.dao.CategoryDao;
 import com.kk.gulimall.product.entity.BrandEntity;
 import com.kk.gulimall.product.entity.CategoryEntity;
+import com.kk.gulimall.product.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -36,6 +39,9 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
     @Autowired
     private CategoryBrandRelationDao categoryBrandRelationDao;
 
+    @Autowired
+    private BrandService brandService;
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<CategoryBrandRelationEntity> page = this.page(new Query<CategoryBrandRelationEntity>().getPage(params), new QueryWrapper<CategoryBrandRelationEntity>());
@@ -46,6 +52,7 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
 
     /**
      * 新增品牌与分类关联关系
+     *
      * @param categoryBrandRelation
      */
     @Override
@@ -74,12 +81,34 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         categoryBrandRelationEntity.setBrandId(brandId);
         categoryBrandRelationEntity.setBrandName(name);
         //更新条件 品牌所在的id
-        this.update(categoryBrandRelationEntity,new UpdateWrapper<CategoryBrandRelationEntity>().eq("brand_id",brandId));
+        this.update(categoryBrandRelationEntity, new UpdateWrapper<CategoryBrandRelationEntity>().eq("brand_id", brandId));
     }
 
     @Override
     public void updateCategory(Long catId, String name) {
-        this.baseMapper.updateCategory(catId,name);
+        this.baseMapper.updateCategory(catId, name);
+    }
+
+
+    /**
+     * 通过catId查询品牌
+     * @param catId
+     * @return
+     */
+    @Override
+    public List<BrandEntity> getBrandsByCatId(Long catId) {
+        //TODO   循环查库 不好
+        //condition
+        QueryWrapper<CategoryBrandRelationEntity> qw = new QueryWrapper<CategoryBrandRelationEntity>().eq("catelog_id", catId);
+        //get list of CategoryBrandRelationEntity
+        List<CategoryBrandRelationEntity> categoryBrandRelationEntities = categoryBrandRelationDao.selectList(qw);
+        //
+        List<BrandEntity> collect = categoryBrandRelationEntities.stream().map(s -> {
+            Long brandId = s.getBrandId();
+            BrandEntity byId = brandService.getById(brandId);
+            return byId;
+        }).collect(Collectors.toList());
+        return collect;
     }
 
 }
