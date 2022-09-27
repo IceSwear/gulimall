@@ -31,8 +31,12 @@ public class SkuInfoController {
     @Autowired
     private SkuInfoService skuInfoService;
 
+
     /**
-     * 列表
+     * sku检索
+     * https://easydoc.net/s/78237135/ZUqEdvA4/ucirLq1D
+     * @param params
+     * @return
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params) {
@@ -49,7 +53,9 @@ public class SkuInfoController {
 
 
     /**
-     * 信息
+     *
+     * @param skuId
+     * @return
      */
     @RequestMapping("/info/{skuId}")
     public R info(@PathVariable("skuId") Long skuId) {

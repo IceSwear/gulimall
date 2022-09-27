@@ -1,8 +1,11 @@
 package com.kk.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.kk.gulimall.product.entity.ProductAttrValueEntity;
+import com.kk.gulimall.product.service.ProductAttrValueService;
 import com.kk.gulimall.product.vo.AttrResponseVo;
 import com.kk.gulimall.product.vo.AttrVo;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +32,9 @@ public class AttrController {
     @Autowired
     private AttrService attrService;
 
+    @Autowired
+    private ProductAttrValueService productAttrValueService;
+
     /**
      * 列表
      */
@@ -51,7 +57,7 @@ public class AttrController {
     @GetMapping("/{attrType}/list/{catelogId}")
     public R salesList(@RequestParam Map<String, Object> params, @PathVariable(value = "catelogId") Long catelogId, @PathVariable(value = "attrType") String attrType) {
 //        PageUtils page = attrService.queryPage(params);
-        log.info("/{attrType}/list/param数据:{},id:{},类型为attrType:{}", params, catelogId,attrType);
+        log.info("/{attrType}/list/param数据:{},id:{},类型为attrType:{}", params, catelogId, attrType);
         PageUtils page = attrService.queryPage(params, catelogId, attrType);
         return R.ok().put("page", page);
     }
@@ -92,6 +98,34 @@ public class AttrController {
     public R delete(@RequestBody Long[] attrIds) {
         attrService.removeByIds(Arrays.asList(attrIds));
 
+        return R.ok();
+    }
+
+
+    /**
+     * 获取spu规格
+     *https://easydoc.net/s/78237135/ZUqEdvA4/GhhJhkg7
+     * @param spuId
+     * @return
+     */
+    @GetMapping("/base/listforspu/{spuId}")
+    public R listForSpu(@PathVariable(value = "spuId") Long spuId) {
+        List<ProductAttrValueEntity> entities = productAttrValueService.baseAttrListForSpu(spuId);
+        return R.ok().put("data", entities);
+    }
+
+
+    /**
+     * 修改商品规格
+     * https://easydoc.net/s/78237135/ZUqEdvA4/GhnJ0L85
+     * @param spuId
+     * @param entities
+     * @return
+     */
+    @PostMapping("/update/{spuId}")
+    public R update(@PathVariable(value = "spuId") Long spuId, @RequestBody List<ProductAttrValueEntity> entities) {
+        log.info("spuId:{},entities: {}");
+        productAttrValueService.updateSpuAttr(spuId, entities);
         return R.ok();
     }
 
