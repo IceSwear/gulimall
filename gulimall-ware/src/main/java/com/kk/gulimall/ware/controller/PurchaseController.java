@@ -2,9 +2,11 @@ package com.kk.gulimall.ware.controller;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.kk.gulimall.ware.vo.MergeVo;
+import com.kk.gulimall.ware.vo.PurchaseDoneVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,26 @@ public class PurchaseController {
     private PurchaseService purchaseService;
 
 
+    @PostMapping("/done")
+    public R finish(@RequestBody PurchaseDoneVo purchaseDoneVo) {
+        log.info("finish:{}", purchaseDoneVo);
+        purchaseService.done(purchaseDoneVo);
+        return R.ok();
+    }
+
+    /**
+     * 接收采购
+     *
+     * @param purchaseIds
+     * @return
+     */
+    @PostMapping("/received")
+    public R received(@RequestBody List<Long> purchaseIds) {
+        log.info("mepurchaseIdsrge:{}", purchaseIds);
+        purchaseService.received(purchaseIds);
+        return R.ok();
+    }
+
     /**
      * 未领取的采购单
      */
@@ -52,6 +74,7 @@ public class PurchaseController {
 
         return R.ok().put("page", page);
     }
+
     /**
      * 列表
      */

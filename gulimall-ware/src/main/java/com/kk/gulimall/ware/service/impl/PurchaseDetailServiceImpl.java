@@ -4,6 +4,7 @@ import com.kk.gulimall.ware.entity.PurchaseEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -51,6 +52,14 @@ public class PurchaseDetailServiceImpl extends ServiceImpl<PurchaseDetailDao, Pu
 
         IPage<PurchaseDetailEntity> page = this.page(new Query<PurchaseDetailEntity>().getPage(params), qw);
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<PurchaseDetailEntity> listDetailByPurchaseId(Long id) {
+        QueryWrapper<PurchaseDetailEntity> qw = new QueryWrapper<>();
+        qw.eq("purchase_id",id);
+
+        return this.list(qw);
     }
 
 }

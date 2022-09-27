@@ -29,6 +29,7 @@ public class WareInfoServiceImpl extends ServiceImpl<WareInfoDao, WareInfoEntity
 
     /**
      * query by condition
+     *
      * @param params
      * @return
      */
@@ -41,7 +42,6 @@ public class WareInfoServiceImpl extends ServiceImpl<WareInfoDao, WareInfoEntity
                 s.eq("id", key).or().like("name", key).or().like("address", key).or().like("areacode", key);
             });
         }
-
         IPage<WareInfoEntity> page = this.page(new Query<WareInfoEntity>().getPage(params), qw);
 
         return new PageUtils(page);

@@ -31,6 +31,7 @@ public class WareSkuController {
 
     @GetMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
+        log.info("ware--waresku:{}",params);
         PageUtils page = wareSkuService.queryPageByCondition(params);
         return R.ok().put("page", page);
     }
