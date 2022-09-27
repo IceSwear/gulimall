@@ -121,7 +121,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 SkuInfoEntity skuInfoEntity = new SkuInfoEntity();
                 BeanUtils.copyProperties(item, skuInfoEntity);
                 skuInfoEntity.setBrandId(spuInfoEntity.getBrandId());
-                skuInfoEntity.setCatalogId(spuInfoEntity.getCatalogId());
+                skuInfoEntity.setCatelogId(spuInfoEntity.getCatelogId());
                 skuInfoEntity.setSaleCount(0L);
                 skuInfoEntity.setSpuId(spuInfoEntity.getId());
                 skuInfoEntity.setSkuDefaultImg(defaultImg);
@@ -167,6 +167,33 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     @Override
     public void saveBaseSpuInfo(SpuInfoEntity spuInfoEntity) {
         this.baseMapper.insert(spuInfoEntity);
+    }
+
+    @Override
+    public PageUtils queryPageByCondition(Map<String, Object> params) {
+        String status = (String) params.get("status");
+        String key = (String) params.get("key");
+        String brandId = (String) params.get("brandId");
+        String catelogId = (String) params.get("catelogId");
+        QueryWrapper<SpuInfoEntity> qw = new QueryWrapper<SpuInfoEntity>();
+        if (!StringUtils.isEmpty(key)){
+            qw.and(s->{
+                s.eq("id",key).or().like("spu_name",key);
+            });
+        }
+        if (!StringUtils.isEmpty(status)){
+            qw.eq("publish_status",status);
+            }
+        if (!StringUtils.isEmpty(brandId)&&"0".equalsIgnoreCase(brandId)){
+          qw.eq("brand_id",brandId);
+        }
+        if (!StringUtils.isEmpty(catelogId)&&"0".equalsIgnoreCase(catelogId)){
+           qw.eq("catelog_id",catelogId);
+        }
+        IPage<SpuInfoEntity> page=this.page(new Query<SpuInfoEntity>().getPage(params),qw);
+
+
+        return new PageUtils(page);
     }
 
 
