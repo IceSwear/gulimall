@@ -61,6 +61,11 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         return new PageUtils(page);
     }
 
+
+    /**
+     * 保存属性【规格参数，销售属性】-post-/product/attr/save
+     * @param attrVo
+     */
     @Transactional
     @Override
     public void saveAttr(AttrVo attrVo) {
@@ -125,6 +130,12 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         return pageUtils;
     }
 
+
+    /**
+     * 07、查询属性详情-get-/product/attr/info/{attrId}
+     * @param attrId
+     * @return
+     */
     @Override
     public AttrResponseVo getAttrInfo(Long attrId) {
         AttrResponseVo vo = new AttrResponseVo();
@@ -135,7 +146,6 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         }
         //非空的话
         BeanUtils.copyProperties(attrEntity, vo);
-
         //设置分组信息,先判断是否为基本类型
         if (attrEntity.getAttrType() == ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode()) {
             AttrAttrgroupRelationEntity relationEntity = attrAttrgroupRelationDao.selectOne(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_id", attrId));
@@ -162,6 +172,10 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         return vo;
     }
 
+    /**
+     * 08、修改属性-POST-/product/attr/update
+     * @param attrVo
+     */
     @Transactional
     @Override
     public void updateAttr(AttrVo attrVo) {
@@ -202,6 +216,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         List<Long> attrIds = entities.stream().map(s -> {
             return s.getAttrId();
         }).collect(Collectors.toList());
+        //判断
         if (Objects.isNull(attrIds) || attrIds.size() == 0) {
             return null;
         }
@@ -209,6 +224,11 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         return (List<AttrEntity>) attrEntities;
     }
 
+
+    /**
+     * 12、删除属性与分组的关联关系-post-/product/attrgroup/attr/relation/delete
+     * @param vos
+     */
     @Override
     public void deleteRelation(AttrGroupRelationVo... vos) {
 //        QueryWrapper<AttrAttrgroupRelationEntity> wrapper = new QueryWrapper<>();
@@ -219,7 +239,6 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             BeanUtils.copyProperties(s, relationEntity);
             return relationEntity;
         }).collect(Collectors.toList());
-
         attrAttrgroupRelationDao.deleteBatchRelation(entities);
     }
 

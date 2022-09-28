@@ -32,6 +32,7 @@ public class AttrAttrgroupRelationServiceImpl extends ServiceImpl<AttrAttrgroupR
 
     /**
      * 批量保存 P82
+     * 11、添加属性与分组关联关系-post-/product/attrgroup/attr/relation
      *
      * @param vos
      */
@@ -39,6 +40,7 @@ public class AttrAttrgroupRelationServiceImpl extends ServiceImpl<AttrAttrgroupR
     public void saveBatch(List<AttrGroupRelationVo> vos) {
         List<AttrAttrgroupRelationEntity> collect = vos.stream().map(s -> {
             AttrAttrgroupRelationEntity attrAttrgroupRelationEntity = new AttrAttrgroupRelationEntity();
+            //属性对拷
             BeanUtils.copyProperties(s, attrAttrgroupRelationEntity);
             return attrAttrgroupRelationEntity;
         }).collect(Collectors.toList());

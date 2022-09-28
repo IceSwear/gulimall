@@ -8,8 +8,6 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * ÉÌÆ·Èý¼¶·ÖÀà
- * 
  * @author KK Wong
  * @email huangyk@mail.sustech.edu.cn
  * @date 2022-09-15 13:10:15
@@ -17,7 +15,19 @@ import java.util.List;
 @Mapper
 public interface CategoryDao extends BaseMapper<CategoryEntity> {
 
+
+    /**
+     * 查出所有分类
+     *
+     * @return
+     */
     List<CategoryEntity> selectAll();
 
-    void logicallyDeletedByIds(@Param(value = "ids") List<Long> asList);
+
+    /**
+     * 逻辑删除catelogs by id
+     *
+     * @param catIds
+     */
+    void logicallyDeletedByIds(@Param(value = "catIds") List<Long> catIds);
 }

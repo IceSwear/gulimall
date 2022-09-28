@@ -64,7 +64,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
 
     /**
-     * 商品上架
+     * 20、商品上架-post-/product/spuinfo/{spuId}/up
      *
      * @param spuId
      */
@@ -82,7 +82,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
 
     /**
-     * 高级部分再来完善
+     * 19、新增商品-post-/product/spuinfo/save
      *
      * @param spuSaveVo
      */
@@ -186,6 +186,12 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         this.baseMapper.insert(spuInfoEntity);
     }
 
+
+    /**
+     * spu检索-get-/product/spuinfo/list
+     * @param params
+     * @return
+     */
     @Override
     public PageUtils queryPageByCondition(Map<String, Object> params) {
         String status = (String) params.get("status");

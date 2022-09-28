@@ -35,6 +35,12 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         this.baseMapper.insert(skuInfoEntity);
     }
 
+
+    /**
+     * 21、sku检索-get-/product/skuinfo/list
+     * @param params
+     * @return
+     */
     @Override
     public PageUtils queryPageByCondition(Map<String, Object> params) {
         log.info("params:{}", params);

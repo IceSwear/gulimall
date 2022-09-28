@@ -52,6 +52,7 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
 
     /**
      * 新增品牌与分类关联关系
+     * 新增品牌与分类关联关系-post-product/categorybrandrelation/save
      *
      * @param categoryBrandRelation
      */
@@ -74,6 +75,12 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
         this.save(categoryBrandRelation);
     }
 
+    /**
+     * 更新品牌信息
+     *
+     * @param brandId
+     * @param name
+     */
     @Override
     public void updateBrand(Long brandId, String name) {
         //new categoryBrandRelationEntity
@@ -92,6 +99,8 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
 
     /**
      * 通过catId查询品牌
+     * 14、获取分类关联的品牌-get-/product/categorybrandrelation/brands/list
+     *
      * @param catId
      * @return
      */

@@ -39,6 +39,7 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueDao
     /**
      * 获取spu规格
      * https://easydoc.net/s/78237135/ZUqEdvA4/GhhJhkg7
+     * 获取spu规格-get-/product/attr/base/listforspu/{spuId}
      * @param spuId
      * @return
      */
@@ -55,6 +56,7 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueDao
 
     /**
      * 修改商品规格
+     * 23、修改商品规格-post-/product/attr/update/{spuId}
      * @param spuId
      * @param entities
      */

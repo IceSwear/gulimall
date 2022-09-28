@@ -44,6 +44,13 @@ public class AttrGroupController {
     @Autowired
     private AttrAttrgroupRelationService attrAttrgroupRelationService;
 
+
+    /**
+     * 11、添加属性与分组关联关系-post-/product/attrgroup/attr/relation
+     *
+     * @param vos
+     * @return
+     */
     @PostMapping("/attr/relation")
     public R addRelation(@RequestBody List<AttrGroupRelationVo> vos) {
         attrAttrgroupRelationService.saveBatch(vos);
@@ -61,15 +68,21 @@ public class AttrGroupController {
     }
 
     /**
-     * 获取分类属性接口
+     * 获取分类属性分组-get-/product/attrgroup/list/{catelogId}
+     * https://easydoc.net/s/78237135/ZUqEdvA4/OXTgKobR
      *
      * @param params
      * @param catelogId
-     * @return
+     * @return {
+     * "msg": "success",
+     * "code": 0,
+     * "page": {
+     * <p>
+     * }
      */
     @GetMapping("/list/{catelogId}")
     public R listByCatelogId(@RequestParam Map<String, Object> params, @PathVariable(value = "catelogId") Long catelogId) {
-        log.info("查询参数param:{}", params);
+        log.info("获取分类属性分组param:{}", params);
 //        PageUtils page = attrGroupService.queryPage(params);
         PageUtils page = attrGroupService.queryPageByCatelogId(params, catelogId);
         return R.ok().put("page", page);
@@ -77,20 +90,20 @@ public class AttrGroupController {
 
 
     /**
-     * 获取属性分组详情
+     * 获取属性分组详情-get-/product/attrgroup/info/{attrGroupId}
      *
      * @param attrGroupId
      * @return
      */
-    @RequestMapping("/info/{attrGroupId}")
+    @GetMapping("/info/{attrGroupId}")
     public R info(@PathVariable("attrGroupId") Long attrGroupId) {
+        log.info("获取属性分组详情-attrGroupId:{}", attrGroupId);
         //query to get attrgourp object 先按照id找到对象
         AttrGroupEntity attrGroup = attrGroupService.getById(attrGroupId);
         //get catelog id
         Long catelogId = attrGroup.getCatelogId();
         //then find Category Path by id
         Long path[] = categoryService.findCategoryPath(catelogId);
-
         //put the catlogpth back to attrgroup object
         attrGroup.setCatelogPath(path);
         return R.ok().put("attrGroup", attrGroup);
@@ -127,6 +140,13 @@ public class AttrGroupController {
     }
 
 
+    /**
+     * 获取属性分组的关联的所有属性-get-/product/attrgroup/{attrgroupId}/attr/relation
+     *
+     * @param attrgroupId
+     * @return
+     */
+
     @GetMapping("/{attrgroupId}/attr/relation")
     public R attrRelation(@PathVariable("attrgroupId") Long attrgroupId) {
         List<AttrEntity> entities = attrService.getRelationAttr(attrgroupId);
@@ -134,6 +154,13 @@ public class AttrGroupController {
     }
 
 
+    /**
+     * 13、获取属性分组没有关联的其他属性-get-/product/attrgroup/{attrgroupId}/noattr/relation
+     *
+     * @param attrgroupId
+     * @param params
+     * @return
+     */
     @GetMapping("/{attrgroupId}/noattr/relation")
     public R noattrRelation(@PathVariable("attrgroupId") Long attrgroupId, @RequestParam Map<String, Object> params) {
         log.info("/{attrgroupId}/noattr");
@@ -143,13 +170,14 @@ public class AttrGroupController {
 
 
     /**
-     * 删除关联关系
+     * 12、删除属性与分组的关联关系-post-/product/attrgroup/attr/relation/delete
      *
      * @param vos
      * @return
      */
     @PostMapping("/attr/relation/delete")
     public R relationDelete(@RequestBody AttrGroupRelationVo[] vos) {
+        log.info("12、删除属性与分组的关联关系vos:{}}", vos);
         attrService.deleteRelation(vos);
         return R.ok();
     }
@@ -157,7 +185,9 @@ public class AttrGroupController {
 
     /**
      * 通过catelogId 获取attr分组以及所有属性
-     *https://easydoc.net/s/78237135/ZUqEdvA4/6JM6txHf
+     * 17、获取分类下所有分组&关联属性-get-/product/attrgroup/{catelogId}/withattr
+     * https://easydoc.net/s/78237135/ZUqEdvA4/6JM6txHf
+     *
      * @param catelogId
      * @return
      */

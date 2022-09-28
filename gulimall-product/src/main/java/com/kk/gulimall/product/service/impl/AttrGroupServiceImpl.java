@@ -41,7 +41,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
 
     /**
-     * 获取分类属性接口 查询
+     * 获取分类属性分组-get-/product/attrgroup/list/{catelogId}
      *
      * @param params
      * @param catelogId
@@ -60,6 +60,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
         //get key from the map 从map里获取key
         String key = (String) params.get("key");
         //judge that if key is empty or not. true=set condition false =not to set empty
+        //关键字如果不为空
         if (!StringUtils.isEmpty(key)) {
             log.info("关键字key不为空:{}", key);
             //here is a good example to seal a method like this
@@ -75,7 +76,7 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
     /**
      * 根据分类id查出所有的分组以及这些组里面的属性
-     *
+     *17、获取分类下所有分组&关联属性-get-/product/attrgroup/{catelogId}/withattr
      * @param catelogId
      * @return
      */

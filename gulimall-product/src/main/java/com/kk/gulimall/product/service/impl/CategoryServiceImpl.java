@@ -41,24 +41,35 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     @Override
     public List<CategoryEntity> listWithTree() {
-        //handle wrting sql    // select * select all
+        //handle wrting sql
+        // select * select all
         List<CategoryEntity> entities = categoryDao.selectAll();
-//        log.info("所有分类{}", entities);
+        //可选alternative
+        //List<CategoryEntity> categoryEntities = baseMapper.selectList(null);
+        // log.info("所有分类{}", entities);
         //,组装成父子的属性结构
+        //stream.filter一般适用于list集合,主要作用就是模拟sql查询，从集合中查询想要的数据。filter里面的参数s
         List<CategoryEntity> collect = entities.stream().filter(s -> s.getParentCid() == 0).map(s -> {
             s.setChildren(getChildrens(s, entities));
             return s;
         }).sorted((s1, s2) -> {
+            //maybe there will be some dirty data in the database so we need to judege if the getSort() is null
+            //由于数据库可能会有脏数据，所以我们需要判断方法得出来是不是空指针异常
             return (s1.getSort() == null ? 0 : s1.getSort()) - (s2.getSort() == null ? 0 : s2.getSort());
         }).collect(Collectors.toList());
         return collect;
     }
 
+
+    /**
+     * 逻辑删除catelogs by id
+     * @param catIds
+     */
     @Override
-    public void removeMenusByIds(List<Long> asList) {
-        //先检查 TODO 检查删除前是否被其他地方引用
-        log.info("删除ids:{}", asList);
-        categoryDao.logicallyDeletedByIds(asList);
+    public void removeMenusByIds(List<Long> catIds) {
+        //TODO 检查删除前是否被其他地方引用
+        log.info("删除ids:{}", catIds);
+        categoryDao.logicallyDeletedByIds(catIds);
     }
 
 
@@ -73,7 +84,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     public Long[] findCategoryPath(Long catelogId) {
         //new a  list
         List<Long> paths = new ArrayList<>();
-
         List<Long> parentPath = findParentPath(catelogId, paths);
         //反转，将集合反转，因为add进去有顺序
         Collections.reverse(parentPath);
@@ -114,6 +124,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
 
+
+
+    /**
+     *  内置递归方法p45
+     * @param root
+     * @param all
+     * @return
+     */
     private List<CategoryEntity> getChildrens(CategoryEntity root, List<CategoryEntity> all) {
         List<CategoryEntity> children = all.stream().filter(s -> {
             return s.getParentCid() == root.getCatId();

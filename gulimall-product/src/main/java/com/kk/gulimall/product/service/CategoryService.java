@@ -18,9 +18,18 @@ public interface CategoryService extends IService<CategoryEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
 
+
+    /**
+     * Query all levels of catelogs and show as tree style获取所有分类及子分类
+     * @return
+     */
     List<CategoryEntity> listWithTree();
 
-    void removeMenusByIds(List<Long> asList);
+    /**
+     * 删除 请求体，post才有请求体 必须发送 post ，自动将请求体转为对应对象
+     * @param catIds
+     */
+    void removeMenusByIds(List<Long> catIds);
 
 
     /**
@@ -32,5 +41,6 @@ public interface CategoryService extends IService<CategoryEntity> {
     Long[] findCategoryPath(Long catelogId);
 
     void updateCascade(CategoryEntity category);
+
 }
 

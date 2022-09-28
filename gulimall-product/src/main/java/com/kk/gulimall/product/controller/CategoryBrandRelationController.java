@@ -42,17 +42,15 @@ public class CategoryBrandRelationController {
     }
 
     /**
-     * 获取当前品牌关联的所有分类列表
+     * 获取品牌关联的分类-get-/product/categorybrandrelation/catelog/list
      *
      * @param brandId
      * @return
      */
     @RequestMapping(value = "/catelog/list", method = RequestMethod.GET)
     public R categoryList(@RequestParam(value = "brandId") Long brandId) {
-//        PageUtils page = categoryBrandRelationService.queryPage(params);
-
+          //PageUtils page = categoryBrandRelationService.queryPage(params);
         QueryWrapper<CategoryBrandRelationEntity> queryWrapper = new QueryWrapper<CategoryBrandRelationEntity>().eq("brand_id", brandId);
-        //
         List<CategoryBrandRelationEntity> data = categoryBrandRelationService.list(queryWrapper);
         return R.ok().put("data", data);
     }
@@ -60,6 +58,7 @@ public class CategoryBrandRelationController {
 
     /**
      * p84 上传商品时显示分类关联品牌列表
+     * 14、获取分类关联的品牌-get-/product/categorybrandrelation/brands/list
      * @param catId
      * @return
      */
@@ -92,15 +91,14 @@ public class CategoryBrandRelationController {
 
     /**
      * 新增品牌与分类关联关系
-     *
+     *新增品牌与分类关联关系-post-product/categorybrandrelation/save
      * @param categoryBrandRelation
      * @return
      */
     @RequestMapping("/save")
     public R save(@RequestBody CategoryBrandRelationEntity categoryBrandRelation) {
-//        categoryBrandRelationService.save(categoryBrandRelation);
+     // categoryBrandRelationService.save(categoryBrandRelation);
         categoryBrandRelationService.saveDetail(categoryBrandRelation);
-
         return R.ok();
     }
 

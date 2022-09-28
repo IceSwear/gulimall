@@ -15,18 +15,23 @@
         <result property="productUnit" column="product_unit"/>
         <result property="productCount" column="product_count"/>
     </resultMap>
+    <!--    逻辑删除catelogs by id-->
     <update id="logicallyDeletedByIds">
         update pms_category
         set show_status=0
         where show_status=1 and cat_id in
-        <foreach collection="ids" item="id" index="index"
+        <foreach collection="catIds" item="id" index="index"
                  open="(" close=")" separator=",">
             #{id}
         </foreach>
     </update>
+
+
+    <!--    查出所有分类-->
     <select id="selectAll" resultType="com.kk.gulimall.product.entity.CategoryEntity">
         select *
-        from pms_category where show_status=1
+        from pms_category
+        where show_status = 1
     </select>
 
 

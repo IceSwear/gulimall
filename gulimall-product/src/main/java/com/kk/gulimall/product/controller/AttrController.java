@@ -54,6 +54,13 @@ public class AttrController {
 //        return R.ok().put("page", page);
 //    }
 
+    /**
+     * 09、获取分类销售属性-get-/product/attr/sale/list/{catelogId}（同05）
+     * @param params
+     * @param catelogId
+     * @param attrType
+     * @return
+     */
     @GetMapping("/{attrType}/list/{catelogId}")
     public R salesList(@RequestParam Map<String, Object> params, @PathVariable(value = "catelogId") Long catelogId, @PathVariable(value = "attrType") String attrType) {
 //        PageUtils page = attrService.queryPage(params);
@@ -63,7 +70,10 @@ public class AttrController {
     }
 
     /**
-     * 信息
+     * 07、查询属性详情-get-/product/attr/info/{attrId}
+     *
+     * @param attrId
+     * @return
      */
     @GetMapping("/info/{attrId}")
     public R info(@PathVariable("attrId") Long attrId) {
@@ -72,8 +82,11 @@ public class AttrController {
         return R.ok().put("attr", vo);
     }
 
+
     /**
-     * 保存
+     * 保存属性【规格参数，销售属性】-post-/product/attr/save
+     * @param attrVo
+     * @return
      */
     @RequestMapping("/save")
     public R save(@RequestBody AttrVo attrVo) {
@@ -82,12 +95,14 @@ public class AttrController {
     }
 
     /**
-     * 修改
+     * 08、修改属性-POST-/product/attr/update
+     * @param attrVo
+     * @return
      */
     @RequestMapping("/update")
     public R update(@RequestBody AttrVo attrVo) {
+        log.info("08、修改属性-POST-/product/attr/update:{}",attrVo);
         attrService.updateAttr(attrVo);
-
         return R.ok();
     }
 
@@ -104,7 +119,8 @@ public class AttrController {
 
     /**
      * 获取spu规格
-     *https://easydoc.net/s/78237135/ZUqEdvA4/GhhJhkg7
+     * https://easydoc.net/s/78237135/ZUqEdvA4/GhhJhkg7
+     *获取spu规格-get-/product/attr/base/listforspu/{spuId}
      * @param spuId
      * @return
      */
@@ -118,6 +134,7 @@ public class AttrController {
     /**
      * 修改商品规格
      * https://easydoc.net/s/78237135/ZUqEdvA4/GhnJ0L85
+     *23、修改商品规格-post-/product/attr/update/{spuId}
      * @param spuId
      * @param entities
      * @return

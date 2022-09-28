@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
  */
 @Slf4j
 @Configuration
+@EnableTransactionManagement
 @MapperScan("com.kk.gulimall.product.dao")
 public class MyBatisConfig {
 

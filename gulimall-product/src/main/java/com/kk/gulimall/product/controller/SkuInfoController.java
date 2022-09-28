@@ -35,6 +35,7 @@ public class SkuInfoController {
     /**
      * sku检索
      * https://easydoc.net/s/78237135/ZUqEdvA4/ucirLq1D
+     * 21、sku检索-get-/product/skuinfo/list
      * @param params
      * @return
      */

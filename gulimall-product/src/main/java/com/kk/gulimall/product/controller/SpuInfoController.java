@@ -28,6 +28,7 @@ public class SpuInfoController {
 
 
     /**
+     * 20、商品上架-post-/product/spuinfo/{spuId}/up
      * https://easydoc.net/s/78237135/ZUqEdvA4/DhOtFr4A
      * @param spuId
      * @return
@@ -39,7 +40,9 @@ public class SpuInfoController {
     }
 
     /**
-     * 列表
+     * spu检索-get-/product/spuinfo/list
+     * @param params
+     * @return
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params) {
@@ -59,8 +62,11 @@ public class SpuInfoController {
         return R.ok().put("spuInfo", spuInfo);
     }
 
+
     /**
-     * 保存
+     * 19、新增商品-post-/product/spuinfo/save
+     * @param spuSaveVo
+     * @return
      */
     @RequestMapping("/save")
     public R save(@RequestBody SpuSaveVo spuSaveVo) {
