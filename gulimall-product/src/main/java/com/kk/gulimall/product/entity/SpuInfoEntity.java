@@ -9,7 +9,6 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * spuÐÅÏ¢
  * 
  * @author KK Wong
  * @email huangyk@mail.sustech.edu.cn
@@ -20,42 +19,23 @@ import lombok.Data;
 public class SpuInfoEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * ÉÌÆ·id
-	 */
 	@TableId
 	private Long id;
-	/**
-	 * ÉÌÆ·Ãû³Æ
-	 */
+
 	private String spuName;
-	/**
-	 * ÉÌÆ·ÃèÊö
-	 */
+
 	private String spuDescription;
-	/**
-	 * ËùÊô·ÖÀàid
-	 */
+
 	private Long catelogId;
-	/**
-	 * Æ·ÅÆid
-	 */
+
 	private Long brandId;
-	/**
-	 * 
-	 */
+
 	private BigDecimal weight;
-	/**
-	 * ÉÏ¼Ü×´Ì¬[0 - ÏÂ¼Ü£¬1 - ÉÏ¼Ü]
-	 */
+
 	private Integer publishStatus;
-	/**
-	 * 
-	 */
+
 	private Date createTime;
-	/**
-	 * 
-	 */
+
 	private Date updateTime;
 
 }

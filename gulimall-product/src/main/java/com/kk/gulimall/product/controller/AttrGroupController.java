@@ -157,7 +157,7 @@ public class AttrGroupController {
 
     /**
      * 通过catelogId 获取attr分组以及所有属性
-     *
+     *https://easydoc.net/s/78237135/ZUqEdvA4/6JM6txHf
      * @param catelogId
      * @return
      */

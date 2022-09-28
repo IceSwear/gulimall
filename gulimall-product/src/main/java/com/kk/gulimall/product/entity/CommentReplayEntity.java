@@ -8,7 +8,6 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * ÉÌÆ·ÆÀ¼Û»Ø¸´¹ØÏµ
  * 
  * @author KK Wong
  * @email huangyk@mail.sustech.edu.cn
@@ -19,18 +18,12 @@ import lombok.Data;
 public class CommentReplayEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * id
-	 */
+
 	@TableId
 	private Long id;
-	/**
-	 * ÆÀÂÛid
-	 */
+
 	private Long commentId;
-	/**
-	 * »Ø¸´id
-	 */
+
 	private Long replyId;
 
 }
